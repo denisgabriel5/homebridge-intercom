@@ -1,21 +1,20 @@
 {
-  "private": true,
-  "displayName": "Plugin Name",
-  "name": "homebridge-plugin-name",
+  "displayName": "Intercom",
+  "name": "homebridge-intercom",
   "version": "1.0.0",
-  "description": "A short description about what your plugin does.",
+  "description": "Manage your old intercom via Homebridge. \nIt consists of two accessories: a doorbell (for checking and notifyng if the intercom rings) and a lock mechanism (for opening the intercom door).",
   "license": "Apache-2.0",
-  "type": "module",
+  "homepage": "https://github.com/denisgabriel5/homebridge-intercom/blob/main/README.md",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/USERNAME/GITHUB_PROJECT_NAME.git"
+    "url": "git+https://github.com/denisgabriel5/homebridge-intercom.git"
   },
   "bugs": {
-    "url": "https://github.com/USERNAME/GITHUB_PROJECT_NAME/issues"
+    "url": "https://github.com/denisgabriel5/homebridge-intercom/issues"
   },
   "engines": {
     "node": "^18.17.0 || ^20.9.0",
-    "homebridge": "^1.8.0"
+    "homebridge": "^1.7.0"
   },
   "main": "dist/index.js",
   "scripts": {
@@ -25,10 +24,14 @@
     "prepublishOnly": "npm run lint && npm run build"
   },
   "keywords": [
-    "homebridge-plugin"
+    "homebridge-plugin",
+    "shelly",
+    "intercom",
+    "doorbell",
+    "lock"
   ],
   "devDependencies": {
-    "@types/node": "^20.12.13",
+    "@types/node": "^20.7.0",
     "@typescript-eslint/eslint-plugin": "^7.11.0",
     "@typescript-eslint/parser": "^7.11.0",
     "eslint": "^8.57.0",
@@ -37,5 +40,8 @@
     "rimraf": "^5.0.7",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "axios": "^1.7.2"
   }
 }

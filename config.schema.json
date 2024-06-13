@@ -1,5 +1,5 @@
 {
-  "pluginAlias": "ExampleHomebridgePlugin",
+  "pluginAlias": "Intercom Plugin",
   "pluginType": "platform",
   "singular": true,
   "schema": {
@@ -9,7 +9,98 @@
         "title": "Name",
         "type": "string",
         "required": true,
-        "default": "Example Dynamic Platform"
+        "default": "Intercom",
+        "description": "The name that will appear in your homebridge log."
+      },
+      "manufacturer": {
+        "title": "Manufacturer",
+        "type": "string",
+        "required": false,
+        "default": "Default-Manufacturer",
+        "description": "What will show under Manufacturer in accessory settings."
+      },
+      "model": {
+        "title": "Model",
+        "type": "string",
+        "required": false,
+        "default": "Default-Model",
+        "description": "What will show under Model in accessory settings."
+      },
+      "serialNumber": {
+        "title": "Serial Number",
+        "type": "string",
+        "required": false,
+        "default": "Default-Serial",
+        "description": "What will show under Serial Number in accessory settings."
+      },
+      "timeout": {
+        "title": "Timeout",
+        "type": "number",
+        "placeholder": 10,
+        "minimum": 1,
+        "maximum": 60,
+        "required": false,
+        "description": "The number of seconds between the unlocking and locking notifications. Defaults to 10 seconds."
+      },
+      "intercomType": {
+        "title": "Intercom",
+        "type": "string",
+        "required": true,
+        "default": "form",
+        "description": "Select your intercom model.",
+        "oneOf": [
+          {
+            "title": "None",
+            "enum": [
+              "none"
+            ]
+          },
+          {
+            "title": "Shelly Uni",
+            "enum": [
+              "shellyUni"
+            ]
+          }
+        ]
+      },
+      "shellyUniStatusUrl": {
+        "title": "Status URL",
+        "type": "string",
+        "required": true,
+        "description": "URL which retrives the status of the Shelly Uni.",
+        "condition": {
+          "functionBody": "return model.intercomType === \"shellyUni\";"
+        }
+      },
+      "shellyUniTalkUrl": {
+        "title": "Talk URL",
+        "type": "string",
+        "required": true,
+        "description": "URL which triggers Talk button on the Shelly Uni.",
+        "condition": {
+          "functionBody": "return model.intercomType === \"shellyUni\";"
+        }
+      },
+      "shellyUniOpenUrl": {
+        "title": "Open URL",
+        "type": "string",
+        "required": true,
+        "description": "URL which triggers Open button on the Shelly Uni.",
+        "condition": {
+          "functionBody": "return model.intercomType === \"shellyUni\";"
+        }
+      },
+      "buttonsTimeout": {
+        "title": "Buttons timeout",
+        "type": "number",
+        "placeholder": 1,
+        "minimum": 1,
+        "maximum": 10,
+        "required": false,
+        "description": "The number of seconds between \"pressing\" the Talk button and Open button. Defaults to 1 second.",
+        "condition": {
+          "functionBody": "return model.intercomType === \"shellyUni\";"
+        }
       }
     }
   }
