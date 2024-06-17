@@ -6,7 +6,7 @@
 
 # Homebridge Intercom Plugin
 
-[![npm](https://badgen.net/npm/v/homebridge-intercom/latest)](https://www.npmjs.com/package/homebridge-intercom)
+[![npm](https://badgen.net/npm/v/homebridge-intercom)](https://www.npmjs.com/package/homebridge-intercom)
 [![npm](https://badgen.net/npm/dt/homebridge-intercom?label=downloads)](https://www.npmjs.com/package/homebridge-intercom)
 <a href="https://github.com/denisgabriel5/homebridge-intercom/actions/workflows/build.yml"><img title="Node Build" src="https://github.com/denisgabriel5/homebridge-intercom/actions/workflows/build.yml/badge.svg"></a>
 
