@@ -70,13 +70,13 @@ export class ShellyUniLockMechanism {
     // in order to open the intercom door you must press the talking button and then the open door button
     // so press the talk button with the following setTimeout
     setTimeout(async () => {
-      await axios.post(this.parent.config.shellyUniTalkUrl!);
+      await axios.get(this.parent.config.shellyUniTalkUrl!);
       this.parent.platform.log.debug('Intercom talk button pressed');
     }, 0);
 
     // and after roughly 1 second press the second button and also mark the intercom as open/unlocked/unsecured
     setTimeout(async () => {
-      await axios.post(this.parent.config.shellyUniOpenUrl!);
+      await axios.get(this.parent.config.shellyUniOpenUrl!);
       this.parent.platform.log.debug('Intercom open button pressed');
       this.service.updateCharacteristic(this.Characteristic.LockTargetState, this.Characteristic.LockCurrentState.UNSECURED);
       this.service.updateCharacteristic(this.Characteristic.LockCurrentState, this.Characteristic.LockCurrentState.UNSECURED);
