@@ -104,6 +104,17 @@
           "functionBody": "return model.intercomType === \"shellyUni\";"
         }
       },
+      "shellyUniButtonsOrder": {
+        "title": "Buttons pressing order",
+        "type": "string",
+        "required": true,
+        "default": "open-talk",
+        "placeholder": "open-talk-talk",
+        "description": "Some intercoms require different pressing order. The default one is pressing the Talk button, then the Open button, but others might require an additional press of the Talk or Open button.",
+        "condition": {
+          "functionBody": "return model.intercomType === \"shellyUni\";"
+        }
+      },
       "shellyUniButtonsTimeout": {
         "title": "Buttons timeout",
         "type": "number",
