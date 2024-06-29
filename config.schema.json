@@ -115,6 +115,17 @@
         "condition": {
           "functionBody": "return model.intercomType === \"shellyUni\";"
         }
+      },
+      "shellyUniRingSuppressionTimeout": {
+        "title": "Ring suppression timeout",
+        "type": "number",
+        "default": 0,
+        "minimum": 0,
+        "required": false,
+        "description": "The number of seconds to ignore any other changing in the status of the Shelly Uni (changing that implies that the intercom is ringing).",
+        "condition": {
+          "functionBody": "return model.intercomType === \"shellyUni\";"
+        }
       }
     }
   }

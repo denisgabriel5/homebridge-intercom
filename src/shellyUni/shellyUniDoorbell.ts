@@ -8,6 +8,7 @@ export class ShellyUniDoorbell {
   private readonly Characteristic: typeof Characteristic;
   private displayName = 'Doorbell';
   private ringSensorService;
+  private ringSuppressed;
 
   public service: Service;
 
@@ -32,6 +33,7 @@ export class ShellyUniDoorbell {
     // create handlers for required characteristics
     this.ringSensorService.getCharacteristic(this.Characteristic.OccupancyDetected)
       .onGet(this.handleOccupancyDetectedGet.bind(this));
+    this.ringSuppressed = false;
 
     this.parent.platform.log.debug('Started checking the intercom');
 
@@ -49,9 +51,15 @@ export class ShellyUniDoorbell {
         this.service.updateCharacteristic(this.Characteristic.ProgrammableSwitchEvent, this.ring());
         this.ringSensorService.updateCharacteristic(this.Characteristic.OccupancyDetected,
           this.Characteristic.OccupancyDetected.OCCUPANCY_DETECTED);
+
+        this.ringSuppressed = true;
+
+        setTimeout(async () => {
+          this.ringSuppressed = false;
+        }, this.parent.config.shellyUniRingSuppressionTimeout! * 1000);
       }
 
-      if (status < this.parent.config.shellyUniStatusThreshold!) {
+      if (status < this.parent.config.shellyUniStatusThreshold! && !this.ringSuppressed) {
         this.ringSensorService.updateCharacteristic(this.Characteristic.OccupancyDetected,
           this.Characteristic.OccupancyDetected.OCCUPANCY_NOT_DETECTED);
       }
