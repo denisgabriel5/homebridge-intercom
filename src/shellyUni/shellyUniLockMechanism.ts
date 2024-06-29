@@ -81,7 +81,7 @@ export class ShellyUniLockMechanism {
       this.service.updateCharacteristic(this.Characteristic.LockTargetState, this.Characteristic.LockCurrentState.UNSECURED);
       this.service.updateCharacteristic(this.Characteristic.LockCurrentState, this.Characteristic.LockCurrentState.UNSECURED);
       this.parent.platform.log.debug('Intercom opened');
-    }, this.parent.config.buttonsTimeout! * 1000);
+    }, this.parent.config.shellyUniButtonsTimeout! * 1000);
 
     // in the end mark the intercom as closed/locked/secured
     setTimeout(() => {

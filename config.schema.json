@@ -111,14 +111,14 @@
           "functionBody": "return model.intercomType === \"shellyUni\";"
         }
       },
-      "buttonsTimeout": {
+      "shellyUniButtonsTimeout": {
         "title": "Buttons timeout",
         "type": "number",
         "placeholder": 1,
         "minimum": 1,
         "maximum": 10,
         "required": false,
-        "description": "The number of seconds between \"pressing\" the Talk button and Open button. Defaults to 1 second.",
+        "description": "The number of seconds between \"pressing\" the buttons. Defaults to 1 second.",
         "condition": {
           "functionBody": "return model.intercomType === \"shellyUni\";"
         }
