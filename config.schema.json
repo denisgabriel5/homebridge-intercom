@@ -39,7 +39,7 @@
         "default": 10,
         "minimum": 5,
         "maximum": 60,
-        "required": false,
+        "required": true,
         "description": "The number of seconds between the unlocking and locking notifications. Defaults to 10 seconds."
       },
       "intercomType": {
@@ -110,7 +110,7 @@
         "default": 1,
         "minimum": 1,
         "maximum": 5,
-        "required": false,
+        "required": true,
         "description": "The number of seconds between \"pressing\" the buttons. Defaults to 1 second.",
         "condition": {
           "functionBody": "return model.intercomType === \"shellyUni\";"
@@ -121,7 +121,7 @@
         "type": "number",
         "default": 0,
         "minimum": 0,
-        "required": false,
+        "required": true,
         "description": "The number of seconds to ignore any other changing in the status of the Shelly Uni (changing that implies that the intercom is ringing).",
         "condition": {
           "functionBody": "return model.intercomType === \"shellyUni\";"
