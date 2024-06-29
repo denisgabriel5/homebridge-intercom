@@ -36,7 +36,7 @@
       "timeout": {
         "title": "Timeout",
         "type": "number",
-        "placeholder": 10,
+        "default": 10,
         "minimum": 1,
         "maximum": 60,
         "required": false,
@@ -46,15 +46,8 @@
         "title": "Intercom",
         "type": "string",
         "required": true,
-        "default": "form",
         "description": "Select your intercom model.",
         "oneOf": [
-          {
-            "title": "None",
-            "enum": [
-              "none"
-            ]
-          },
           {
             "title": "Shelly Uni",
             "enum": [
@@ -75,8 +68,8 @@
       "shellyUniStatusJsonPath": {
         "title": "Status JSON Path",
         "type": "string",
-        "default": "field1.field2.field3",
         "required": true,
+        "placeholder": "field1.0.field2",
         "description": "Path in JSON structure to the field that changes upon ringing.",
         "condition": {
           "functionBody": "return model.intercomType === \"shellyUni\";"
@@ -114,7 +107,7 @@
       "shellyUniButtonsTimeout": {
         "title": "Buttons timeout",
         "type": "number",
-        "placeholder": 1,
+        "default": 1,
         "minimum": 1,
         "maximum": 10,
         "required": false,
