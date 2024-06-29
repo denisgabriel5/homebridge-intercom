@@ -72,6 +72,27 @@
           "functionBody": "return model.intercomType === \"shellyUni\";"
         }
       },
+      "shellyUniStatusJsonPath": {
+        "title": "Status JSON Path",
+        "type": "string",
+        "default": "field1.field2.field3",
+        "required": true,
+        "description": "Path in JSON structure to the field that changes upon ringing.",
+        "condition": {
+          "functionBody": "return model.intercomType === \"shellyUni\";"
+        }
+      },
+      "shellyUniStatusThreshold": {
+        "title": "Status Threshold",
+        "type": "number",
+        "required": true,  
+        "minimum": 1,
+        "maximum": 100,
+        "description": "The minimum value of the field that changes upon ringing.",
+        "condition": {
+          "functionBody": "return model.intercomType === \"shellyUni\";"
+        }
+      },
       "shellyUniTalkUrl": {
         "title": "Talk URL",
         "type": "string",

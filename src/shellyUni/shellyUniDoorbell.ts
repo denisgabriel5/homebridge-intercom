@@ -37,9 +37,13 @@ export class ShellyUniDoorbell {
 
     // continously check the status of the intercom
     setInterval(async () => {
-      const status = (await axios.get(this.parent.config.shellyUniStatusUrl!)).data;
+      const statusData = (await axios.get(this.parent.config.shellyUniStatusUrl!)).data;
+      const status = this.parent.config.shellyUniStatusJsonPath!.split('.').reduce((k, v) => {
+        return k && k[v];
+      }, statusData);
 
-      if (status['adcs'][0]['voltage'] > 1 && !this.ringSensorService.getCharacteristic(this.Characteristic.OccupancyDetected).value) {
+      if (status > this.parent.config.shellyUniStatusThreshold! &&
+        !this.ringSensorService.getCharacteristic(this.Characteristic.OccupancyDetected).value) {
         this.parent.platform.log.debug('Intercom rang');
 
         this.service.updateCharacteristic(this.Characteristic.ProgrammableSwitchEvent, this.ring());
@@ -47,7 +51,7 @@ export class ShellyUniDoorbell {
           this.Characteristic.OccupancyDetected.OCCUPANCY_DETECTED);
       }
 
-      if (status['adcs'][0]['voltage'] === 0) {
+      if (status < this.parent.config.shellyUniStatusThreshold!) {
         this.ringSensorService.updateCharacteristic(this.Characteristic.OccupancyDetected,
           this.Characteristic.OccupancyDetected.OCCUPANCY_NOT_DETECTED);
       }
