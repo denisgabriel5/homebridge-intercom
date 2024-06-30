@@ -13,9 +13,13 @@ export interface IntercomConfig extends PlatformConfig {
   timeout?: number;
   intercomType?: string;
   shellyUniStatusUrl?: string;
+  shellyUniStatusJsonPath?: string;
+  shellyUniStatusThreshold?: string;
   shellyUniTalkUrl?: string;
   shellyUniOpenUrl?: string;
-  buttonsTimeout?: number;
+  shellyUniButtonsTimeout?: number;
+  shellyUniButtonsOrder?: string;
+  shellyUniRingSuppressionTimeout?: number;
 }
 
 /**

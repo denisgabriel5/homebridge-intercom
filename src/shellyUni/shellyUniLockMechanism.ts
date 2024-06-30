@@ -6,8 +6,6 @@ export class ShellyUniLockMechanism {
   private readonly Service: typeof Service;
   private readonly Characteristic: typeof Characteristic;
   private displayName = 'LockMechanism';
-  // private targetState: CharacteristicValue;
-  // private currentState: CharacteristicValue;
   public service: Service;
 
   constructor(
@@ -59,7 +57,7 @@ export class ShellyUniLockMechanism {
   /**
    * Handle requests to set the "Lock Target State" characteristic
    */
-  handleLockTargetStateSet(value: CharacteristicValue) {
+  async handleLockTargetStateSet(value: CharacteristicValue) {
     this.parent.platform.log.debug('Triggered SET LockTargetState: ', value);
 
     // the door locks automatially so we ignore locking requests altogether
@@ -67,27 +65,50 @@ export class ShellyUniLockMechanism {
       return;
     }
 
-    // in order to open the intercom door you must press the talking button and then the open door button
-    // so press the talk button with the following setTimeout
-    setTimeout(async () => {
-      await axios.post(this.parent.config.shellyUniTalkUrl!);
-      this.parent.platform.log.debug('Intercom talk button pressed');
-    }, 0);
+    // press the buttons in the specified order
+    const buttons = this.parent.config.shellyUniButtonsOrder!.split('-');
 
-    // and after roughly 1 second press the second button and also mark the intercom as open/unlocked/unsecured
-    setTimeout(async () => {
-      await axios.post(this.parent.config.shellyUniOpenUrl!);
-      this.parent.platform.log.debug('Intercom open button pressed');
-      this.service.updateCharacteristic(this.Characteristic.LockTargetState, this.Characteristic.LockCurrentState.UNSECURED);
-      this.service.updateCharacteristic(this.Characteristic.LockCurrentState, this.Characteristic.LockCurrentState.UNSECURED);
-      this.parent.platform.log.debug('Intercom opened');
-    }, this.parent.config.buttonsTimeout! * 1000);
+    for (let i = 0; i < buttons.length; i++) {
+      switch (buttons[i]) {
+        case 'open':
+          axios.get(this.parent.config.shellyUniOpenUrl!);
+          this.parent.platform.log.debug('Intercom Open button pressed');
+          break;
 
-    // in the end mark the intercom as closed/locked/secured
+        case 'talk':
+          axios.get(this.parent.config.shellyUniTalkUrl!);
+          this.parent.platform.log.debug('Intercom Talk button pressed');
+          break;
+
+        default:
+          this.parent.platform.log.error(`Button ${buttons[i]} is wrong!`);
+          break;
+      }
+
+      if (i === buttons.length - 1) {
+        // mark the intercom as open/unlocked/unsecured
+        this.service.updateCharacteristic(this.Characteristic.LockTargetState, this.Characteristic.LockCurrentState.UNSECURED);
+        this.service.updateCharacteristic(this.Characteristic.LockCurrentState, this.Characteristic.LockCurrentState.UNSECURED);
+        this.parent.platform.log.debug('Intercom opened');
+
+        break;
+      } else {
+        await this.sleep(this.parent.config.shellyUniButtonsTimeout! * 1000);
+      }
+    }
+
+    // in the end, mark the intercom as closed/locked/secured
     setTimeout(() => {
       this.service.updateCharacteristic(this.Characteristic.LockTargetState, this.Characteristic.LockCurrentState.SECURED);
       this.service.updateCharacteristic(this.Characteristic.LockCurrentState, this.Characteristic.LockCurrentState.SECURED);
       this.parent.platform.log.debug('Intercom closed');
     }, this.parent.config.timeout! * 1000);
+  }
+
+  /**
+   * Delays the execution for a number of specified seconds
+   */
+  sleep(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }

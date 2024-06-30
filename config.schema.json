@@ -36,25 +36,18 @@
       "timeout": {
         "title": "Timeout",
         "type": "number",
-        "placeholder": 10,
-        "minimum": 1,
+        "default": 10,
+        "minimum": 5,
         "maximum": 60,
-        "required": false,
+        "required": true,
         "description": "The number of seconds between the unlocking and locking notifications. Defaults to 10 seconds."
       },
       "intercomType": {
         "title": "Intercom",
         "type": "string",
         "required": true,
-        "default": "form",
         "description": "Select your intercom model.",
         "oneOf": [
-          {
-            "title": "None",
-            "enum": [
-              "none"
-            ]
-          },
           {
             "title": "Shelly Uni",
             "enum": [
@@ -68,6 +61,27 @@
         "type": "string",
         "required": true,
         "description": "URL which retrives the status of the Shelly Uni.",
+        "condition": {
+          "functionBody": "return model.intercomType === \"shellyUni\";"
+        }
+      },
+      "shellyUniStatusJsonPath": {
+        "title": "Status JSON Path",
+        "type": "string",
+        "required": true,
+        "placeholder": "field1.0.field2",
+        "description": "Path in JSON structure to the field that changes upon ringing.",
+        "condition": {
+          "functionBody": "return model.intercomType === \"shellyUni\";"
+        }
+      },
+      "shellyUniStatusThreshold": {
+        "title": "Status Threshold",
+        "type": "number",
+        "required": true,  
+        "minimum": 1,
+        "maximum": 100,
+        "description": "The minimum value of the field that changes upon ringing.",
         "condition": {
           "functionBody": "return model.intercomType === \"shellyUni\";"
         }
@@ -90,14 +104,36 @@
           "functionBody": "return model.intercomType === \"shellyUni\";"
         }
       },
-      "buttonsTimeout": {
+      "shellyUniButtonsOrder": {
+        "title": "Buttons pressing order",
+        "type": "string",
+        "required": true,
+        "default": "open-talk",
+        "placeholder": "open-talk-talk",
+        "description": "Some intercoms require different pressing order. The default one is pressing the Talk button, then the Open button, but others might require an additional press of the Talk or Open button.",
+        "condition": {
+          "functionBody": "return model.intercomType === \"shellyUni\";"
+        }
+      },
+      "shellyUniButtonsTimeout": {
         "title": "Buttons timeout",
         "type": "number",
-        "placeholder": 1,
+        "default": 1,
         "minimum": 1,
-        "maximum": 10,
-        "required": false,
-        "description": "The number of seconds between \"pressing\" the Talk button and Open button. Defaults to 1 second.",
+        "maximum": 5,
+        "required": true,
+        "description": "The number of seconds between \"pressing\" the buttons. Defaults to 1 second.",
+        "condition": {
+          "functionBody": "return model.intercomType === \"shellyUni\";"
+        }
+      },
+      "shellyUniRingSuppressionTimeout": {
+        "title": "Ring suppression timeout",
+        "type": "number",
+        "default": 0,
+        "minimum": 0,
+        "required": true,
+        "description": "The number of seconds to ignore any other changing in the status of the Shelly Uni (changing that implies that the intercom is ringing).",
         "condition": {
           "functionBody": "return model.intercomType === \"shellyUni\";"
         }
