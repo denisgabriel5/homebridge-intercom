@@ -80,7 +80,23 @@ export class IntercomPlatform implements DynamicPlatformPlugin {
     }
   }
 
+  isValidUrl(url: string) {
+    try {
+      new URL(url);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  }
+
+
   registerShellyUniIntercom(config: IntercomConfig) {
+    // check if the URL is valid
+    if (!this.isValidUrl(config.shellyUniStatusUrl!)) {
+      this.log.error('Status URL is invalid. Cannot register intercom.');
+      return;
+    }
+
     // generate a unique id for the intercom from the URL used to get the status of ShellyUni
     const uuid = this.api.hap.uuid.generate(config.shellyUniStatusUrl!);
 
