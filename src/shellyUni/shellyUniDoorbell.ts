@@ -37,15 +37,21 @@ export class ShellyUniDoorbell {
       .onGet(this.handleOccupancyDetectedGet.bind(this));
     this.ringSuppressed = false;
 
-    if (this.parent.config.shellyUniRingNotificationType === 'request') {
-      this.parent.platform.log.info('Request enabled, initializing webhook...');
-      this.initializeWebhook();
-    } else if (this.parent.config.shellyUniRingNotificationType === 'poll') {
-      this.parent.platform.log.info('Polling enabled, initializing polling...');
-      this.initializePolling();
-    } else {
-      this.parent.platform.log.error('Invalid notification type, please use either "request" or "poll"');
-      return;
+    if (!this.parent.config.shellyUniPollingInterval) {
+      this.parent.platform.log.warn('Polling interval is not set, defaulting to 1 second.');
+      this.parent.config.shellyUniPollingInterval = 1;
+    }
+
+    switch (this.parent.config.shellyUniRingNotificationType) {
+      case 'request':
+        this.parent.platform.log.info('Request enabled, initializing webhook...');
+        this.initializeWebhook();
+        break;
+      case 'poll':
+      default:
+        this.parent.platform.log.info('Polling enabled, initializing polling...');
+        this.initializePolling();
+        break;
     }
 
     this.parent.platform.log.info('Initialized Shelly Uni Intercom: ', this.parent.accessory.displayName);
@@ -64,7 +70,8 @@ export class ShellyUniDoorbell {
           return;
         }
 
-        this.parent.platform.log.info('Received ringing notification with status value: ', status);
+        this.parent.platform.log.info('Received ringing notification: ' +
+          `(ip: ${req.socket.localAddress!}, port: ${req.socket.localPort!})`);
         this.processRingStatus(parseFloat(status!));
 
         res.writeHead(200, { 'Content-Type': 'application/json' });
