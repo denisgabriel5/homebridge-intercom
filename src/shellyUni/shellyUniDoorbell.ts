@@ -37,7 +37,7 @@ export class ShellyUniDoorbell {
       .onGet(this.handleOccupancyDetectedGet.bind(this));
     this.ringSuppressed = false;
 
-    if (!this.parent.config.shellyUniPollingInterval) {
+    if (!this.parent.config.shellyUniPollingInterval!) {
       this.parent.platform.log.warn('Polling interval is not set, defaulting to 1 second.');
       this.parent.config.shellyUniPollingInterval = 1;
     }
@@ -101,7 +101,7 @@ export class ShellyUniDoorbell {
 
       this.parent.platform.log.debug('Checking status of the intercom: ', status);
       this.processRingStatus(parseFloat(status!));
-    }, this.parent.config.shellyUniPollingInterval * 1000);
+    }, this.parent.config.shellyUniPollingInterval! * 1000);
   }
 
   private processRingStatus(status: number) {
