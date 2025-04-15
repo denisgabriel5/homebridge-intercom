@@ -66,14 +66,15 @@ In order to configure the intercom you will need to fill the following fields:
   - Defaults to `poll`.
 - Webhook Port: `number` _(required if using `request` notification type)_
   - The port on which the webhook will listen for `http://homebridge.ip:port/ringing?status=$value` calls.
+  - **Note:** If you're Homebridge in Docker you must expose this port to the host.
   - Defaults to `9000`.
   - `request` specific field.
 - Status URL: `string` _(required if using `poll` notification type)_
   - URL which retrieves the status of the Shelly Uni.
   - `poll` specific field.
 - Status JSON Path: `string` _(required if using `poll` notification type)_
-  - `poll` specific field.
   - Path in the JSON structure to the field that changes upon ringing.
+  - `poll` specific field.
 - Poll Interval: `number` _(required if using `poll` notification type)_
   - The interval in seconds at which the plugin polls the endpoint for ringing status.
   - Defaults to `1`.
