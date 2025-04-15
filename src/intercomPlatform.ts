@@ -12,8 +12,11 @@ export interface IntercomConfig extends PlatformConfig {
   serialNumber?: string;
   timeout?: number;
   intercomType?: string;
+  shellyUniRingNotificationType?: string;
+  shellyUniWebhookPort?: number;
   shellyUniStatusUrl?: string;
   shellyUniStatusJsonPath?: string;
+  shellyUniPollingInterval?: number;
   shellyUniStatusThreshold?: string;
   shellyUniTalkUrl?: string;
   shellyUniOpenUrl?: string;
@@ -89,10 +92,9 @@ export class IntercomPlatform implements DynamicPlatformPlugin {
     }
   }
 
-
   registerShellyUniIntercom(config: IntercomConfig) {
     // check if the URL is valid
-    if (!this.isValidUrl(config.shellyUniStatusUrl!)) {
+    if (!this.isValidUrl(config.shellyUniStatusUrl!) && config.shellyUniRingNotificationType === 'poll') {
       this.log.error('Status URL is invalid. Cannot register intercom.');
       return;
     }
