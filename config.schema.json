@@ -86,7 +86,7 @@
         "default": 9000,
         "description": "The port on which the webhook will listen for 'http://homebridge.ip:port/ringing?status=$value' calls.\nWARNING: If you're running this in docker you must expose this port to the host.",
         "condition": {
-          "functionBody": "return model.shellyUniRingNotificationType === 'request' && model.intercomType === \"shellyUni\";"
+          "functionBody": "return model.shellyUniRingNotificationType === \"request\" && model.intercomType === \"shellyUni\";"
         }
       },
       "shellyUniStatusUrl": {
@@ -95,7 +95,7 @@
         "required": true,
         "description": "URL which retrives the status of the Shelly Uni.",
         "condition": {
-          "functionBody": "return model.shellyUniRingNotificationType === 'poll' && model.intercomType === \"shellyUni\";"
+          "functionBody": "return model.shellyUniRingNotificationType === \"poll\" && model.intercomType === \"shellyUni\";"
         }
       },
       "shellyUniStatusJsonPath": {
@@ -105,7 +105,7 @@
         "placeholder": "field1.0.field2",
         "description": "Path in JSON structure to the field that changes upon ringing.",
         "condition": {
-          "functionBody": "return model.shellyUniRingNotificationType === 'poll' && model.intercomType === \"shellyUni\";"
+          "functionBody": "return model.shellyUniRingNotificationType === \"poll\" && model.intercomType === \"shellyUni\";"
         }
       },
       "shellyUniPollingInterval": {
@@ -117,7 +117,7 @@
         "default": 1,
         "description": "The interval in seconds at which the plugin polls the endpoint for ringing status. Required if 'ringNotificationType' is set to 'poll'.",
         "condition": {
-          "functionBody": "return model.shellyUniRingNotificationType === 'poll' && model.intercomType === \"shellyUni\";"
+          "functionBody": "return model.shellyUniRingNotificationType === \"poll\" && model.intercomType === \"shellyUni\";"
         }
       },
       "shellyUniStatusThreshold": {
