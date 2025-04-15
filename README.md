@@ -63,19 +63,21 @@ In order to configure the intercom you will need to fill the following fields:
   - Choose how the plugin should detect ringing:
     - `request`: Exposes a webhook that the Shelly Uni calls.
     - `poll`: Polls a Shelly Uni endpoint for it's ringing status.
-  - Defaults to `request`.
-- `request` specific fields:
-  - Webhook Port: `number` _(required if using `request`)_
-    - The port on which the webhook will listen for `http://homebridge.ip:port/ringing?status=$value` calls.
-    - Defaults to `9000`.
-- `poll` specific fields:
-  - Status URL: `string` _(required if using `poll`)_
-    - URL which retrieves the status of the Shelly Uni.
-  - Status JSON Path: `string` _(required if using `poll`)_
-    - Path in the JSON structure to the field that changes upon ringing.
-  - Poll Interval: `number` _(required if using `poll`)_
-    - The interval in seconds at which the plugin polls the endpoint for ringing status.
-    - Defaults to `1`.
+  - Defaults to `poll`.
+- Webhook Port: `number` _(required if using `request` notification type)_
+  - The port on which the webhook will listen for `http://homebridge.ip:port/ringing?status=$value` calls.
+  - Defaults to `9000`.
+  - `request` specific field.
+- Status URL: `string` _(required if using `poll` notification type)_
+  - URL which retrieves the status of the Shelly Uni.
+  - `poll` specific field.
+- Status JSON Path: `string` _(required if using `poll` notification type)_
+  - `poll` specific field.
+  - Path in the JSON structure to the field that changes upon ringing.
+- Poll Interval: `number` _(required if using `poll` notification type)_
+  - The interval in seconds at which the plugin polls the endpoint for ringing status.
+  - Defaults to `1`.
+  - `poll` specific field.
 - Status Threshold: `number` _(required)_
   - The minimum value considered as a ringing trigger for `poll` or `request` methods.
 - Talk URL: `string` _(required)_
