@@ -56,13 +56,46 @@
           }
         ]
       },
+      "shellyUniRingNotificationType": {
+        "title": "Ring Notification Type",
+        "type": "string",
+        "required": true,
+        "description": "Choose how the plugin should detect ringing: 'request' exposes a webhook that the Shelly Uni calls, and 'poll' means the plugin polls an endpoint.",
+        "oneOf": [
+          {
+            "title": "Request",
+            "enum": [
+              "request"
+            ]
+          },
+          {
+            "title": "Poll",
+            "enum": [
+              "poll"
+            ]
+          }
+        ],
+        "default": "poll"
+      },
+      "shellyUniWebhookPort": {
+        "title": "Webhook Port",
+        "type": "number",
+        "required": true,
+        "minimum": 1,
+        "maximum": 65535,
+        "default": 9000,
+        "description": "The port on which the webhook will listen for 'http://homebridge.ip:port/ringing?status=$value' calls.\nWARNING: If you're running this in docker you must expose this port to the host.",
+        "condition": {
+          "functionBody": "return model.shellyUniRingNotificationType === 'request' && model.intercomType === \"shellyUni\";"
+        }
+      },
       "shellyUniStatusUrl": {
         "title": "Status URL",
         "type": "string",
         "required": true,
         "description": "URL which retrives the status of the Shelly Uni.",
         "condition": {
-          "functionBody": "return model.intercomType === \"shellyUni\";"
+          "functionBody": "return model.shellyUniRingNotificationType === 'poll' && model.intercomType === \"shellyUni\";"
         }
       },
       "shellyUniStatusJsonPath": {
@@ -72,16 +105,28 @@
         "placeholder": "field1.0.field2",
         "description": "Path in JSON structure to the field that changes upon ringing.",
         "condition": {
-          "functionBody": "return model.intercomType === \"shellyUni\";"
+          "functionBody": "return model.shellyUniRingNotificationType === 'poll' && model.intercomType === \"shellyUni\";"
+        }
+      },
+      "shellyUniPollingInterval": {
+        "title": "Poll Interval",
+        "type": "number",
+        "required": true,
+        "minimum": 1,
+        "maximum": 60,
+        "default": 1,
+        "description": "The interval in seconds at which the plugin polls the endpoint for ringing status. Required if 'ringNotificationType' is set to 'poll'.",
+        "condition": {
+          "functionBody": "return model.shellyUniRingNotificationType === 'poll' && model.intercomType === \"shellyUni\";"
         }
       },
       "shellyUniStatusThreshold": {
         "title": "Status Threshold",
         "type": "number",
-        "required": true,  
+        "required": true,
         "minimum": 1,
         "maximum": 100,
-        "description": "The minimum value of the field that changes upon ringing.",
+        "description": "The minimum value considered as a ringing tirgger for \"poll\" or \"request\" methods.",
         "condition": {
           "functionBody": "return model.intercomType === \"shellyUni\";"
         }

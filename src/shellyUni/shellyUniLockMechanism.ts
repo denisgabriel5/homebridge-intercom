@@ -15,7 +15,7 @@ export class ShellyUniLockMechanism {
     this.Characteristic = this.parent.platform.api.hap.Characteristic;
 
     this.service = this.parent.accessory.getService(this.displayName) ||
-        this.parent.accessory.addService(this.Service.LockMechanism, this.displayName);
+      this.parent.accessory.addService(this.Service.LockMechanism, this.displayName);
 
     this.service.setCharacteristic(this.Characteristic.Name, this.displayName);
 
@@ -72,12 +72,12 @@ export class ShellyUniLockMechanism {
       switch (buttons[i]) {
         case 'open':
           axios.get(this.parent.config.shellyUniOpenUrl!);
-          this.parent.platform.log.debug('Intercom Open button pressed');
+          this.parent.platform.log.info('Intercom Open button pressed');
           break;
 
         case 'talk':
           axios.get(this.parent.config.shellyUniTalkUrl!);
-          this.parent.platform.log.debug('Intercom Talk button pressed');
+          this.parent.platform.log.info('Intercom Talk button pressed');
           break;
 
         default:
@@ -89,7 +89,7 @@ export class ShellyUniLockMechanism {
         // mark the intercom as open/unlocked/unsecured
         this.service.updateCharacteristic(this.Characteristic.LockTargetState, this.Characteristic.LockCurrentState.UNSECURED);
         this.service.updateCharacteristic(this.Characteristic.LockCurrentState, this.Characteristic.LockCurrentState.UNSECURED);
-        this.parent.platform.log.debug('Intercom opened');
+        this.parent.platform.log.info('Intercom opened');
 
         break;
       } else {
@@ -101,7 +101,7 @@ export class ShellyUniLockMechanism {
     setTimeout(() => {
       this.service.updateCharacteristic(this.Characteristic.LockTargetState, this.Characteristic.LockCurrentState.SECURED);
       this.service.updateCharacteristic(this.Characteristic.LockCurrentState, this.Characteristic.LockCurrentState.SECURED);
-      this.parent.platform.log.debug('Intercom closed');
+      this.parent.platform.log.info('Intercom closed');
     }, this.parent.config.timeout! * 1000);
   }
 
