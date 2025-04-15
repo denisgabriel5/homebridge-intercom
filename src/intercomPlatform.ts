@@ -100,7 +100,7 @@ export class IntercomPlatform implements DynamicPlatformPlugin {
     }
 
     // generate a unique id for the intercom from the URL used to get the status of ShellyUni
-    const uuid = this.api.hap.uuid.generate(config.shellyUniStatusUrl!);
+    const uuid = this.api.hap.uuid.generate(config.name!);
 
     // see if an intercom with the same uuid has already been registered and restored from
     // the cached intercoms we stored in the `configureAccessory` method above
