@@ -75,7 +75,7 @@
             ]
           }
         ],
-        "default": "request"
+        "default": "poll"
       },
       "shellyUniWebhookPort": {
         "title": "Webhook Port",
