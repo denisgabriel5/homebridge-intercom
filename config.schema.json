@@ -86,7 +86,7 @@
         "default": 9000,
         "description": "The port on which the webhook will listen for 'http://homebridge.ip:port/ringing?status=$value' calls.\nWARNING: If you're running this in docker you must expose this port to the host.",
         "condition": {
-          "functionBody": "return model.shellyUniRingNotificationType === \"request\" && model.intercomType === \"shellyUni\";"
+          "functionBody": "return model.shellyUniRingNotificationType === 'request' && model.intercomType === 'shellyUni';"
         }
       },
       "shellyUniStatusUrl": {
@@ -95,7 +95,7 @@
         "required": true,
         "description": "URL which retrives the status of the Shelly Uni.",
         "condition": {
-          "functionBody": "return model.shellyUniRingNotificationType === \"poll\" && model.intercomType === \"shellyUni\";"
+          "functionBody": "return model.shellyUniRingNotificationType === 'poll' && model.intercomType === 'shellyUni';"
         }
       },
       "shellyUniStatusJsonPath": {
@@ -105,7 +105,7 @@
         "placeholder": "field1.0.field2",
         "description": "Path in JSON structure to the field that changes upon ringing.",
         "condition": {
-          "functionBody": "return model.shellyUniRingNotificationType === \"poll\" && model.intercomType === \"shellyUni\";"
+          "functionBody": "return model.shellyUniRingNotificationType === 'poll' && model.intercomType === 'shellyUni';"
         }
       },
       "shellyUniPollingInterval": {
@@ -117,7 +117,7 @@
         "default": 1,
         "description": "The interval in seconds at which the plugin polls the endpoint for ringing status. Required if 'ringNotificationType' is set to 'poll'.",
         "condition": {
-          "functionBody": "return model.shellyUniRingNotificationType === \"poll\" && model.intercomType === \"shellyUni\";"
+          "functionBody": "return model.shellyUniRingNotificationType === 'poll' && model.intercomType === 'shellyUni';"
         }
       },
       "shellyUniStatusThreshold": {
@@ -128,7 +128,7 @@
         "maximum": 100,
         "description": "The minimum value considered as a ringing tirgger for \"poll\" or \"request\" methods.",
         "condition": {
-          "functionBody": "return model.intercomType === \"shellyUni\";"
+          "functionBody": "return model.intercomType === 'shellyUni';"
         }
       },
       "shellyUniTalkUrl": {
@@ -137,7 +137,7 @@
         "required": true,
         "description": "URL which triggers Talk button on the Shelly Uni.",
         "condition": {
-          "functionBody": "return model.intercomType === \"shellyUni\";"
+          "functionBody": "return model.intercomType === 'shellyUni';"
         }
       },
       "shellyUniOpenUrl": {
@@ -146,7 +146,7 @@
         "required": true,
         "description": "URL which triggers Open button on the Shelly Uni.",
         "condition": {
-          "functionBody": "return model.intercomType === \"shellyUni\";"
+          "functionBody": "return model.intercomType === 'shellyUni';"
         }
       },
       "shellyUniButtonsOrder": {
@@ -157,7 +157,7 @@
         "placeholder": "open-talk-talk",
         "description": "Some intercoms require different pressing order. The default one is pressing the Talk button, then the Open button, but others might require an additional press of the Talk or Open button.",
         "condition": {
-          "functionBody": "return model.intercomType === \"shellyUni\";"
+          "functionBody": "return model.intercomType === 'shellyUni';"
         }
       },
       "shellyUniButtonsTimeout": {
@@ -169,7 +169,7 @@
         "required": true,
         "description": "The number of seconds between \"pressing\" the buttons. Defaults to 1 second.",
         "condition": {
-          "functionBody": "return model.intercomType === \"shellyUni\";"
+          "functionBody": "return model.intercomType === 'shellyUni';"
         }
       },
       "shellyUniRingSuppressionTimeout": {
@@ -180,7 +180,7 @@
         "required": true,
         "description": "The number of seconds to ignore any other changing in the status of the Shelly Uni (changing that implies that the intercom is ringing).",
         "condition": {
-          "functionBody": "return model.intercomType === \"shellyUni\";"
+          "functionBody": "return model.intercomType === 'shellyUni';"
         }
       }
     }
