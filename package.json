@@ -1,7 +1,7 @@
 {
   "displayName": "Intercom",
   "name": "homebridge-intercom",
-  "version": "1.8.0",
+  "version": "1.8.1",
   "description": "Manage your old intercom via Homebridge. \nIt consists of two accessories: a doorbell (for checking and notifyng if the intercom rings) and a lock mechanism (for opening the intercom door).",
   "license": "Apache-2.0",
   "homepage": "https://github.com/denisgabriel5/homebridge-intercom",
