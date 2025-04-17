@@ -8,28 +8,24 @@
       "name": {
         "title": "Name",
         "type": "string",
-        "required": true,
         "default": "Intercom",
-        "description": "The name that will appear in your homebridge log."
+        "description": "The name that will appear in your Homebridge log."
       },
       "manufacturer": {
         "title": "Manufacturer",
         "type": "string",
-        "required": false,
         "default": "Default-Manufacturer",
         "description": "What will show under Manufacturer in accessory settings."
       },
       "model": {
         "title": "Model",
         "type": "string",
-        "required": false,
         "default": "Default-Model",
         "description": "What will show under Model in accessory settings."
       },
       "serialNumber": {
         "title": "Serial Number",
         "type": "string",
-        "required": false,
         "default": "Default-Serial",
         "description": "What will show under Serial Number in accessory settings."
       },
@@ -39,13 +35,11 @@
         "default": 10,
         "minimum": 5,
         "maximum": 60,
-        "required": true,
         "description": "The number of seconds between the unlocking and locking notifications. Defaults to 10 seconds."
       },
       "intercomType": {
         "title": "Intercom",
         "type": "string",
-        "required": true,
         "description": "Select your intercom model.",
         "oneOf": [
           {
@@ -54,12 +48,12 @@
               "shellyUni"
             ]
           }
-        ]
+        ],
+        "default": "shellyUni"
       },
       "shellyUniRingNotificationType": {
         "title": "Ring Notification Type",
         "type": "string",
-        "required": true,
         "description": "Choose how the plugin should detect ringing: 'request' exposes a webhook that the Shelly Uni calls, and 'poll' means the plugin polls an endpoint.",
         "oneOf": [
           {
@@ -75,16 +69,15 @@
             ]
           }
         ],
-        "default": "poll"
+        "default": "request"
       },
       "shellyUniWebhookPort": {
         "title": "Webhook Port",
         "type": "number",
-        "required": true,
         "minimum": 1,
         "maximum": 65535,
         "default": 9000,
-        "description": "The port on which the webhook will listen for 'http://homebridge.ip:port/ringing?status=$value' calls.\nWARNING: If you're running this in docker you must expose this port to the host.",
+        "description": "The port on which the webhook will listen for 'http://homebridge_ip:port/ringing?status=$value' calls.\nWARNING: If you're running this in docker you must expose this port to the host.",
         "condition": {
           "functionBody": "return model.shellyUniRingNotificationType === 'request' && model.intercomType === 'shellyUni';"
         }
@@ -92,8 +85,8 @@
       "shellyUniStatusUrl": {
         "title": "Status URL",
         "type": "string",
-        "required": true,
-        "description": "URL which retrives the status of the Shelly Uni.",
+        "placeholder": "http://shelly_user@shelly_ip/status",
+        "description": "URL which retrieves the status of the Shelly Uni.",
         "condition": {
           "functionBody": "return model.shellyUniRingNotificationType === 'poll' && model.intercomType === 'shellyUni';"
         }
@@ -101,7 +94,6 @@
       "shellyUniStatusJsonPath": {
         "title": "Status JSON Path",
         "type": "string",
-        "required": true,
         "placeholder": "field1.0.field2",
         "description": "Path in JSON structure to the field that changes upon ringing.",
         "condition": {
@@ -111,11 +103,10 @@
       "shellyUniPollingInterval": {
         "title": "Poll Interval",
         "type": "number",
-        "required": true,
         "minimum": 1,
         "maximum": 60,
         "default": 1,
-        "description": "The interval in seconds at which the plugin polls the endpoint for ringing status. Required if 'ringNotificationType' is set to 'poll'.",
+        "description": "The interval in seconds at which the plugin polls the endpoint for ringing status.",
         "condition": {
           "functionBody": "return model.shellyUniRingNotificationType === 'poll' && model.intercomType === 'shellyUni';"
         }
@@ -123,10 +114,10 @@
       "shellyUniStatusThreshold": {
         "title": "Status Threshold",
         "type": "number",
-        "required": true,
         "minimum": 1,
         "maximum": 100,
-        "description": "The minimum value considered as a ringing tirgger for \"poll\" or \"request\" methods.",
+        "default": 2,
+        "description": "The minimum value considered as a ringing trigger for 'poll' or 'request' methods.",
         "condition": {
           "functionBody": "return model.intercomType === 'shellyUni';"
         }
@@ -134,7 +125,7 @@
       "shellyUniTalkUrl": {
         "title": "Talk URL",
         "type": "string",
-        "required": true,
+        "placeholder": "http://shelly_user@shelly_ip/relay/0?turn=on",
         "description": "URL which triggers Talk button on the Shelly Uni.",
         "condition": {
           "functionBody": "return model.intercomType === 'shellyUni';"
@@ -143,7 +134,7 @@
       "shellyUniOpenUrl": {
         "title": "Open URL",
         "type": "string",
-        "required": true,
+        "placeholder": "http://shelly_user@shelly_ip/relay/0?turn=on",
         "description": "URL which triggers Open button on the Shelly Uni.",
         "condition": {
           "functionBody": "return model.intercomType === 'shellyUni';"
@@ -152,10 +143,8 @@
       "shellyUniButtonsOrder": {
         "title": "Buttons pressing order",
         "type": "string",
-        "required": true,
-        "default": "open-talk",
-        "placeholder": "open-talk-talk",
-        "description": "Some intercoms require different pressing order. The default one is pressing the Talk button, then the Open button, but others might require an additional press of the Talk or Open button.",
+        "placeholder": "talk-open-talk",
+        "description": "Some intercoms require different pressing order.",
         "condition": {
           "functionBody": "return model.intercomType === 'shellyUni';"
         }
@@ -166,8 +155,7 @@
         "default": 1,
         "minimum": 1,
         "maximum": 5,
-        "required": true,
-        "description": "The number of seconds between \"pressing\" the buttons. Defaults to 1 second.",
+        "description": "The number of seconds between pressing the buttons.",
         "condition": {
           "functionBody": "return model.intercomType === 'shellyUni';"
         }
@@ -177,12 +165,55 @@
         "type": "number",
         "default": 0,
         "minimum": 0,
-        "required": true,
-        "description": "The number of seconds to ignore any other changing in the status of the Shelly Uni (changing that implies that the intercom is ringing).",
+        "description": "Seconds to ignore subsequent ringings after the first one.",
         "condition": {
           "functionBody": "return model.intercomType === 'shellyUni';"
         }
       }
-    }
+    },
+    "required": [
+      "name",
+      "timeout",
+      "intercomType",
+      "shellyUniRingNotificationType",
+      "shellyUniStatusThreshold",
+      "shellyUniTalkUrl",
+      "shellyUniOpenUrl",
+      "shellyUniButtonsOrder",
+      "shellyUniButtonsTimeout",
+      "shellyUniRingSuppressionTimeout"
+    ],
+    "allOf": [
+      {
+        "if": {
+          "properties": {
+            "shellyUniRingNotificationType": {
+              "const": "poll"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "shellyUniStatusUrl",
+            "shellyUniStatusJsonPath",
+            "shellyUniPollingInterval"
+          ]
+        }
+      },
+      {
+        "if": {
+          "properties": {
+            "shellyUniRingNotificationType": {
+              "const": "request"
+            }
+          }
+        },
+        "then": {
+          "required": [
+            "shellyUniWebhookPort"
+          ]
+        }
+      }
+    ]
   }
 }
